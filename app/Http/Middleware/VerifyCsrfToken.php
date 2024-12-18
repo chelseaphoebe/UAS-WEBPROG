@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'datapegawai/*' //This is the url that I dont want Csrf for postman.
     ];
 }

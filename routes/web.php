@@ -12,7 +12,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\HargaGalonController;
 
-Route::get('/penggajian', [PenggajianController::class, 'index'])->name('penggajian.index');
 // Public routesRoute::get('/penggajian', [PenggajianController::class, 'index'])->name('penggajian.index');
 Route::get('/', [WaterGallonsController::class, 'index'])->name('welcome');
 Route::get('/home', [HomeController::class, 'index'])->name('Home');
@@ -21,6 +20,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('Home');
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+//route yang dicoba
+Route::get('/penggajian', [PenggajianController::class, 'index'])->name('penggajian.index');
+
 
 // Semua route yang memerlukan autentikasi admin
 Route::middleware(['auth.admin'])->group(function () {
@@ -47,7 +50,7 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::get('/datapegawai', [PegawaiController::class, 'index'])->name('datapegawai.index');
     Route::post('/datapegawai', [PegawaiController::class, 'store'])->name('datapegawai.store');
     Route::get('/datapegawai/{id}/edit', [PegawaiController::class, 'edit'])->name('datapegawai.edit');
-    Route::put('/datapegawai/{id}', [PegawaiController::class, 'update'])->name('datapegawai.update');
+    Route::post('/datapegawai/{id}', [PegawaiController::class, 'update'])->name('datapegawai.update');
     Route::delete('/datapegawai/{id}', [PegawaiController::class, 'destroy'])->name('datapegawai.destroy');
     
     // Absensi routes

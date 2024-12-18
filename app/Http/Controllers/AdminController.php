@@ -20,7 +20,7 @@ class AdminController extends Controller
         ]);
 
         // Cek langsung ke tabel admin-login di database
-        $admin = DB::table('admin-login')
+        $admin = DB::table('admin_login')
             ->where('email', $credentials['email'])
             ->where('password', $credentials['password'])
             ->first();

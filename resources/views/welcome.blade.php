@@ -687,7 +687,7 @@
     </section>
 
     <!-- Galeri Produk -->
-    <section class="gallery-section section-padding">
+    <!-- <section class="gallery-section section-padding">
         <div class="container">
             <h2 class="text-center section-title">Galeri Produk</h2>
             <div class="row">
@@ -702,7 +702,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Floating WhatsApp -->
     <div class="floating-whatsapp">
