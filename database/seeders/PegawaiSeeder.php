@@ -13,18 +13,21 @@ class PegawaiSeeder extends Seeder
             [
                 'nama' => 'Fadhil jaidi',
                 'no_hp' => '085893930323',
+                'gaji' => 1000000,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama' => 'Fadhil',
                 'no_hp' => '085893930323',
+                'gaji' => 1000000,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'nama' => 'ilman23',
                 'no_hp' => '0987654321',
+                'gaji' => 1000000,
                 'created_at' => now(),
                 'updated_at' => now()
             ],

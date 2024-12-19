@@ -1,99 +1,79 @@
 @extends('layouts.app')
 
 @section('content')
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggajian Pegawai</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f0f2f5;
-            font-family: 'Poppins', sans-serif;
-        }
-        .card {
-            margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .table th, .table td {
-            vertical-align: middle;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: background-color 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-        .header {
-            background: linear-gradient(135deg, #007bff, #00c6ff);
-            color: white;
-            padding: 20px;
-            border-radius: 10px 10px 0 0;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        .header h2 {
-            margin: 0;
-        }
-        .fade-in {
-            animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-5 fade-in">
-        <div class="card">
-            <div class="header text-center">
-                <h2>Penggajian Pegawai</h2>
-            </div>
-            <div class="card-body">
-                <form method="GET" action="{{ url('/penggajian') }}" class="mb-4">
-                    <div class="form-row justify-content-center">
-                        <div class="col-md-4">
-                            <input type="date" name="tanggal_mulai" class="form-control" required>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="date" name="tanggal_akhir" class="form-control" required>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary btn-block">Tampilkan</button>
-                        </div>
-                    </div>
-                </form>
+<div class="container mt-5 fade-in">
+    <div class="card">
+        <div class="header text-center">
+            <h2>Penggajian Pegawai</h2>
+        </div>
+        <div class="card-body">
+            <!-- Flash Messages -->
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
 
-                <table class="table table-bordered table-hover">
-                    <thead class="thead-dark">
+            <!-- Table for Gaji Per Pegawai -->
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Nama Pegawai</th>
+                        <th>Total Gaji</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($pegawai as $index => $p)
                         <tr>
-                            <th>Nama Pegawai</th>
-                            <th>Total Gaji</th>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $p->nama }}</td>
+                            <td>Rp {{ number_format($p->gaji, 2, ',', '.') }}</td>
+                            <td>
+                                <!-- Tombol Edit -->
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal{{ $p->id }}">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($gajiPerPegawai as $nama => $totalGaji)
-                            <tr>
-                                <td>{{ $nama }}</td>
-                                <td>Rp {{ number_format($totalGaji, 2) }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+
+                        <!-- Modal Edit -->
+                        <div class="modal fade" id="editModal{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $p->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editModalLabel{{ $p->id }}">Edit Gaji Pegawai</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ route('penggajian.update', $p->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="gaji">Total Gaji</label>
+                                                <input type="number" name="gaji" id="gaji" class="form-control" value="{{ $p->gaji }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada data pegawai.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
-</body>
-</html>
+</div>
 @endsection
