@@ -22,9 +22,11 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 //route yang dicoba
-Route::post('/galon', [HargaGalonController::class, 'store'])->name('galon.store');
-Route::delete('/galon/{id}', [HargaGalonController::class, 'destroy'])->name('galon.destroy');
-Route::put('/galon/{id}', [HargaGalonController::class, 'update'])->name('galon.update');
+Route::post('/edit-harga-galon', [HargaGalonController::class, 'store'])->name('edit-harga-galon.store');
+Route::delete('/edit-harga-galon/{id}', [HargaGalonController::class, 'destroy'])->name('edit-harga-galon.destroy');
+Route::put('/edit-harga-galon/{id}', [HargaGalonController::class, 'update'])->name('edit-harga-galon.update');
+Route::get('/edit-harga-galon/{id}/edit', [HargaGalonController::class, 'edit'])->name('edit-harga-galon.edit');
+Route::get('/edit-harga-galon/create', [HargaGalonController::class, 'create'])->name('edit-harga-galon.create');
 
 
 // Semua route yang memerlukan autentikasi admin

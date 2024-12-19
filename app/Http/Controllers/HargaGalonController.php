@@ -9,11 +9,19 @@ class HargaGalonController extends Controller
 {
     public function index()
     {
-        $harga = HargaGalon::first(); 
-        if (!$harga) {
-            $harga = HargaGalon::create(['price' => 0]);
-        }
-        return view('edit-harga-galon.index', compact('harga'));
+        // Ambil semua data galon
+        $hargaGalon = HargaGalon::all();
+    
+        // Kirim data ke view
+        return view('edit-harga-galon.index', compact('hargaGalon'));
+    }
+    
+    public function edit(){
+
+    }
+
+    public function create(){
+
     }
 
     public function store(Request $request)
@@ -86,28 +94,20 @@ class HargaGalonController extends Controller
         }
     }   
 
-
     public function destroy($id)
     {
         try {
             $hargaGalon = DB::table('harga_galon')->where('id', $id)->first();
 
             if (!$hargaGalon) {
-                return response()->json([
-                    'message' => 'Data tidak ditemukan.',
-                ], 404);
+                return redirect()->route('harga-galon.index')->with('error', 'Data tidak ditemukan.');
             }
 
             DB::table('harga_galon')->where('id', $id)->delete();
 
-            return response()->json([
-                'message' => 'Data berhasil dihapus.',
-            ], 200);
+            return redirect()->route('edit-harga-galon.index')->with('success', 'Data berhasil dihapus.');
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat menghapus data.',
-                'error' => $e->getMessage(),
-            ], 500);
+            return redirect()->route('edit-harga-galon.index')->with('error', 'Terjadi kesalahan saat menghapus data.');
         }
     }
 }
