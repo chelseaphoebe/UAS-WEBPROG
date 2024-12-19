@@ -579,80 +579,37 @@
 
     <!-- Pilihan Paket Layanan -->
     <section class="pricing-section" id="order">
-        <div class="container">
-            <h2 class="text-center text-white mb-5">Pilihan Paket Layanan</h2>
-            <div class="row justify-content-center align-items-center">
+    <div class="container">
+        <h2 class="text-center text-white mb-5">Pilihan Paket Layanan</h2>
+        <div class="row justify-content-center align-items-center">
+            @foreach($hargaGalon as $paket)
                 <div class="col-lg-5 col-md-6 mb-4">
                     <div class="price-card">
                         <div class="price-header">
-                            <h3>Paket Reguler</h3>
-                            <div class="price-amount">Rp 12.000</div>
-                            <div class="price-period">per galon</div>
+                            <h3>{{ $paket->nama_paket }}</h3>
+                            <div class="price-amount">Rp {{ number_format($paket->price, 0, ',', '.') }}</div>
+                            <div class="price-period">{{ $paket->description }}</div>
                         </div>
                         <ul class="price-features">
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Air Minum Premium
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Pengiriman Standar
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Galon Higienis
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Layanan Pelanggan
-                            </li>
+                            @foreach(json_decode($paket->benefit) as $benefit)
+                                <li>
+                                    <i class="fas fa-check-circle"></i>
+                                    {{ $benefit }}
+                                </li>
+                            @endforeach
                         </ul>
                         <div class="price-button">
-                            <a href="https://wa.me/6285893930323?text=Halo,%20saya%20ingin%20memesan%20galon%20air%20Paket%20Reguler%20dengan%20harga%20Rp%2012.000%20per%20galon
-                            .%20Lokasi%20saya%20di%20area%20Parungpanjang.%20Mohon%20dibantu%20prosesnya." 
+                            <a href="https://wa.me/6285893930323?text=Halo,%20saya%20tertarik%20dengan%20{{ urlencode($paket->nama_paket) }}.%20Harga%20{{ urlencode('Rp ' . number_format($paket->price, 0, ',', '.')) }}%20{{ urlencode($paket->description) }}.%20Mohon%20informasi%20lebih%20lanjut."
                                class="btn btn-primary btn-lg">
                                 Pesan Sekarang
                             </a>
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-5 col-md-6 mb-4">
-                    <div class="price-card">
-                        <div class="price-header">
-                            <h3>Paket Agen</h3>
-                            <div class="price-amount">Rp 10.000</div>
-                            <div class="price-period">per galon (min. 10 galon)</div>
-                        </div>
-                        <ul class="price-features">
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Air Minum Premium
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Galon Higienis
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Harga Khusus Agen
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                Layanan Prioritas
-                            </li>
-                        </ul>
-                        <div class="price-button">
-                            <a href="https://wa.me/6285893930323?text=Halo,%20saya%20tertarik%20dengan%20Paket%20Agen%20(Rp%2010.000%20per%20galon,%20minimal%2010%20galon).%20Saya%20ingin%20mendaftar%20sebagai%20agen.%20Mohon%20informasi%20persyaratan%20dan%20prosedurnya." 
-                               class="btn btn-primary btn-lg">
-                                Daftar Agen
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Cara Pemesanan Mudah -->
     <section class="process-section">

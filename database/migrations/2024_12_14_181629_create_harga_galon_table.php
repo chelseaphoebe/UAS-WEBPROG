@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('harga_galon', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price', 8, 2); // Assuming "harga" is a price or cost column
+            $table->string('nama_paket');
+            $table->decimal('price', 8, 2); 
+            $table->string('description');
+            $table->json('benefit');
             $table->timestamps();
         });
     }

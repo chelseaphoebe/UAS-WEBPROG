@@ -15,10 +15,6 @@ class PegawaiController extends Controller
             $perPage = $request->input('per_page', 10);
             $search = $request->input('search', null);
     
-            // Retrieve all records initially
-            $allPegawai = Pegawai::all();
-    
-            // Start the query for search and pagination
             $query = Pegawai::query();
     
             // Apply search filter if search is not empty
@@ -37,7 +33,6 @@ class PegawaiController extends Controller
             // Pass data to the view
             return view('datapegawai.index', [
                 'pegawai' => $pegawai,       // Filtered and paginated records
-                'allPegawai' => $allPegawai, // All records (unfiltered)
                 'perPage' => $perPage,
                 'totalData' => $pegawai->total(),
                 'from' => $from,

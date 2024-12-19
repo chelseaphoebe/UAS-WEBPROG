@@ -22,7 +22,9 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 //route yang dicoba
-Route::get('/penggajian', [PenggajianController::class, 'index'])->name('penggajian.index');
+Route::post('/galon', [HargaGalonController::class, 'store'])->name('galon.store');
+Route::delete('/galon/{id}', [HargaGalonController::class, 'destroy'])->name('galon.destroy');
+Route::put('/galon/{id}', [HargaGalonController::class, 'update'])->name('galon.update');
 
 
 // Semua route yang memerlukan autentikasi admin
@@ -69,7 +71,4 @@ Route::middleware(['auth.admin'])->group(function () {
 
     Route::get('/edit-harga-galon', [HargaGalonController::class, 'index'])->name('edit-harga-galon.index');
     Route::put('/edit-harga-galon/{id}', [HargaGalonController::class, 'update'])->name('edit-harga-galon.update');
-    
-
-
 });
