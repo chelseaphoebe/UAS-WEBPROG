@@ -56,7 +56,8 @@ class PegawaiController extends Controller
 
             DB::table('pegawai')->insert([
                 'nama' => $request->nama,
-                'no_hp' => $request->no_hp
+                'no_hp' => $request->no_hp,
+                'gaji' => 0,
             ]);
 
             return response()->json([
