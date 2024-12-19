@@ -3,8 +3,11 @@
 @section('content')
 <div class="container mt-5">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h4>Daftar Harga Galon</h4>
+            <a href="{{ route('edit-harga-galon.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Tambah Data Galon
+            </a>
         </div>
         <div class="card-body">
             <!-- Alert jika ada pesan sukses -->
@@ -77,6 +80,7 @@
         </div>
     </div>
 </div>
+
 
 
 @endsection
