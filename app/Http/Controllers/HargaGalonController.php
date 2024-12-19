@@ -9,10 +9,8 @@ class HargaGalonController extends Controller
 {
     public function index()
     {
-        // Ambil semua data galon
         $hargaGalon = HargaGalon::all();
-    
-        // Kirim data ke view
+
         return view('edit-harga-galon.index', compact('hargaGalon'));
     }
     
@@ -39,19 +37,17 @@ class HargaGalonController extends Controller
             'nama_paket' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'description' => 'required|string|max:255',
-            'benefit' => 'required|string', // Validasi sebagai string
+            'benefit' => 'required|string', 
         ]);
     
         try {
-            // Proses input benefit: pisahkan string menjadi array
             $benefitArray = array_map('trim', explode(',', $validated['benefit']));
-    
-            // Simpan data ke database
+ 
             DB::table('harga_galon')->insert([
                 'nama_paket' => $validated['nama_paket'],
                 'price' => $validated['price'],
                 'description' => $validated['description'],
-                'benefit' => json_encode($benefitArray), // Encode array ke JSON
+                'benefit' => json_encode($benefitArray),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -67,12 +63,11 @@ class HargaGalonController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi input
         $validated = $request->validate([
             'nama_paket' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'description' => 'required|string|max:255',
-            'benefit' => 'required|string', // Validasi sebagai string
+            'benefit' => 'required|string',
         ]);
 
         try {
@@ -83,15 +78,13 @@ class HargaGalonController extends Controller
                     ->with('error', 'Data tidak ditemukan.');
             }
 
-            // Proses input benefit: pisahkan string menjadi array
             $benefitArray = array_map('trim', explode(',', $validated['benefit']));
 
-            // Update data
             DB::table('harga_galon')->where('id', $id)->update([
                 'nama_paket' => $validated['nama_paket'],
                 'price' => $validated['price'],
                 'description' => $validated['description'],
-                'benefit' => json_encode($benefitArray), // Encode array ke JSON
+                'benefit' => json_encode($benefitArray),
                 'updated_at' => now(),
             ]);
 
